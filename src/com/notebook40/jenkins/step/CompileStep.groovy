@@ -7,8 +7,11 @@ class CompileStep extends MavenStep {
   void process(Context context) {
     echo(context, "compile application")
 
-    withMaven(context, {
-      context.jenkins.sh 'mvn -B clean compile'
-    })
+    def jenkins = context.jenkins
+    jenkins.withDockerContainer(
+        "image": mavenImageName(context),
+        "args": mavenImageArgs(context)) {
+      jenkins.sh 'mvn -B clean compile'
+    }
   }
 }
