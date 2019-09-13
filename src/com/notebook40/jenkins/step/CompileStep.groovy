@@ -10,7 +10,7 @@ class CompileStep extends MavenStep {
     def jenkins = context.jenkins
     jenkins.withDockerContainer(
         "image": mavenImageName(context),
-        "args": mavenImageArgs()) {
+        "args": mavenImageArgs(context)) {
       jenkins.sh 'mvn clean compile'
     }
   }
