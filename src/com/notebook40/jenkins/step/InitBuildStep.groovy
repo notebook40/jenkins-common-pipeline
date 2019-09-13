@@ -9,12 +9,4 @@ class InitBuildStep extends AbstractStep {
 
     printParameters(context)
   }
-
-  private void printParameters(Context context) {
-    def parameters = "PipelineBuilder parameters: "
-    context.pipelineParameters.each {
-      parameters += "  ${it.key}: ${it.value}\n"
-    }
-    echo(context, parameters)
-  }
 }
