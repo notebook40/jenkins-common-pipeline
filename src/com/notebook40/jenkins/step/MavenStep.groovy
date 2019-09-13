@@ -4,12 +4,10 @@ import com.notebook40.jenkins.context.Context
 
 abstract class MavenStep extends AbstractStep {
   Closure withMaven(Context context, Closure cl) {
-    def jenkins = context.jenkins
-
-    jenkins.withDockerContainer(
+    context.jenkins.withDockerContainer(
         "image": mavenImageName(context),
         "args": mavenImageArgs(context)) {
-      cl(jenkins)
+      cl()
     }
   }
 
