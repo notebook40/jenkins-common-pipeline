@@ -1,7 +1,8 @@
 package com.notebook40.jenkins.pipeline
 
 import com.notebook40.jenkins.context.Context
-import com.notebook40.jenkins.step.InitBuild
+import com.notebook40.jenkins.step.CompileStep
+import com.notebook40.jenkins.step.InitBuildStep
 
 class DefaultPipelineBuilder implements PipelineBuilder {
   @Override
@@ -10,7 +11,11 @@ class DefaultPipelineBuilder implements PipelineBuilder {
 
     jenkins.node {
       jenkins.stage('init build') {
-        new InitBuild().execute(context)
+        new InitBuildStep().execute(context)
+      }
+
+      jenkins.stage('compile app') {
+        new CompileStep().execute(context)
       }
     }
   }
