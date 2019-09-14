@@ -58,11 +58,17 @@ class BuildImageStep extends AbstractStep {
   private void tagImage(Context context) {
     echo(context, 'tag image')
 
+    // Tag with version
     String imageName = context.pipelineParameters["imageName"]
     String version = context.jenkins.readMavenPom().getVersion()
-    String buildNumber = context.jenkins.currentBuild.getNumber()
-
     context.jenkins.sh "docker tag ${imageName}:latest ${imageName}:${version}"
-    context.jenkins.sh "docker tag ${imageName}:latest ${imageName}:${version}.${buildNumber}"
+
+    if (context.pipelineParameters["tagImageWithBuildNumber"]) {
+      // Tag with build number
+      String buildNumber = context.jenkins.currentBuild.getNumber()
+      context.jenkins.sh "docker tag ${imageName}:latest ${imageName}:${version}.${buildNumber}"
+    } else {
+      echo(context, 'tag with build number skipped by pipeline numbers')
+    }
   }
 }
