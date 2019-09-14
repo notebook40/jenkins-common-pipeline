@@ -9,6 +9,6 @@ class InitBuildStep extends AbstractStep {
 
     printParameters(context)
 
-    context.jenkins.checkout scm
+    context.jenkins.checkout context.jenkins.scm
   }
 }
