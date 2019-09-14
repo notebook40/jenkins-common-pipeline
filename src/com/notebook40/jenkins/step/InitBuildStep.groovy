@@ -8,5 +8,7 @@ class InitBuildStep extends AbstractStep {
     echo(context, "Init build")
 
     printParameters(context)
+
+    context.jenkins.checkout scm
   }
 }
