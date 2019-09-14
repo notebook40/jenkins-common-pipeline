@@ -5,6 +5,8 @@ import com.notebook40.jenkins.context.Context
 class IntegrationTestStep extends MavenStep {
   @Override
   void process(Context context) {
+    echo(context, 'integration test')
+
     // TODO to be tested.
     withMaven(context) {
       try {
