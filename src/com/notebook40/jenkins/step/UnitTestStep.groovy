@@ -22,7 +22,7 @@ class UnitTestStep extends MavenStep {
       return false
     }
 
-    if (context.pipelineParameters["skipUnitTest"]) {
+    if (context.pipelineParameterBooleanValue("skipUnitTest")) {
       echo(context, 'Unit test is skipped by pipeline parameters')
       return false
     }

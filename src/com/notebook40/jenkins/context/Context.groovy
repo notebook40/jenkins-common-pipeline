@@ -16,4 +16,8 @@ class Context implements Serializable {
   Map getPipelineParameters() {
     return pipelineParameters
   }
+
+  boolean pipelineParameterBooleanValue(String parameter) {
+    return Boolean.valueOf((String)this.pipelineParameters[parameter])
+  }
 }

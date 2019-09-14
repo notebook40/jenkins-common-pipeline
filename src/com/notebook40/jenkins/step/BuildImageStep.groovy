@@ -23,7 +23,7 @@ class BuildImageStep extends AbstractStep {
       return false
     }
 
-    if (context.pipelineParameters["skipBuildImage"]) {
+    if (context.pipelineParameterBooleanValue("skipBuildImage")) {
       echo(context, 'skip build image by pipeline parameters')
       return false
     }
@@ -63,7 +63,7 @@ class BuildImageStep extends AbstractStep {
     String version = context.jenkins.readMavenPom().getVersion()
     context.jenkins.sh "docker tag ${imageName}:latest ${imageName}:${version}"
 
-    if (context.pipelineParameters["tagImageWithBuildNumber"]) {
+    if (context.pipelineParameterBooleanValue("tagImageWithBuildNumber")) {
       // Tag with build number
       String buildNumber = context.jenkins.currentBuild.getNumber()
       context.jenkins.sh "docker tag ${imageName}:latest ${imageName}:${version}.${buildNumber}"

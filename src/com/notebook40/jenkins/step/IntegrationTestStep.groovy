@@ -23,7 +23,7 @@ class IntegrationTestStep extends MavenStep {
       return false
     }
 
-    if (context.pipelineParameters["skipIntegrationTest"]) {
+    if (context.pipelineParameterBooleanValue("skipIntegrationTest")) {
       echo(context, 'Integration test is skipped by pipeline parameters')
       return false
     }
