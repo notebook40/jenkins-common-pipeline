@@ -26,4 +26,12 @@ abstract class AbstractStep implements Step {
   static void echo(Context context, message) {
     context.jenkins.echo message
   }
+
+  static void printParameters(Context context) {
+    def parameters = "PipelineBuilder parameters:\n"
+    context.pipelineParameters.each {
+      parameters += "  ${it.key}: ${it.value}\n"
+    }
+    echo(context, parameters)
+  }
 }
