@@ -3,6 +3,7 @@ package com.notebook40.jenkins.pipeline
 import com.notebook40.jenkins.context.Context
 import com.notebook40.jenkins.step.CompileStep
 import com.notebook40.jenkins.step.InitBuildStep
+import com.notebook40.jenkins.step.IntegrationTestStep
 import com.notebook40.jenkins.step.UnitTestStep
 
 class DefaultPipelineBuilder implements PipelineBuilder {
@@ -42,6 +43,10 @@ class DefaultPipelineBuilder implements PipelineBuilder {
 
       jenkins.stage('unit test') {
         new UnitTestStep().execute(context)
+      }
+
+      jenkins.stage('integration test') {
+        new IntegrationTestStep().execute(context)
       }
     }
   }
