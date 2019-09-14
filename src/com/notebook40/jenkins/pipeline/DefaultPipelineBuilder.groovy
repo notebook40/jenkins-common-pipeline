@@ -1,6 +1,7 @@
 package com.notebook40.jenkins.pipeline
 
 import com.notebook40.jenkins.context.Context
+import com.notebook40.jenkins.step.BuildImageStep
 import com.notebook40.jenkins.step.CompileStep
 import com.notebook40.jenkins.step.InitBuildStep
 import com.notebook40.jenkins.step.IntegrationTestStep
@@ -52,6 +53,10 @@ class DefaultPipelineBuilder implements PipelineBuilder {
 
       jenkins.stage('package') {
         new PackageStep().execute(context)
+      }
+
+      jenkins.stage('build image') {
+        new BuildImageStep().execute(context)
       }
     }
   }
