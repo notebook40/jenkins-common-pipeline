@@ -10,11 +10,11 @@ class BuildImageStep extends AbstractStep {
     // build image
     buildImage(context)
 
-    // remove dangling images
-    removeDanglingImages(context)
-
     // tag image
     tagImage(context)
+
+    // remove dangling images
+    removeDanglingImages(context)
   }
 
   @Override
