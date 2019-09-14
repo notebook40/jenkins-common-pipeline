@@ -2,9 +2,9 @@ package com.notebook40.jenkins.context
 
 class Context implements Serializable {
   def jenkins
-  def pipelineParameters
+  Map pipelineParameters
 
-  Context(jenkins, pipelineParameters) {
+  Context(jenkins, Map pipelineParameters) {
     this.jenkins = jenkins
     this.pipelineParameters = pipelineParameters
   }
@@ -13,7 +13,11 @@ class Context implements Serializable {
     return jenkins
   }
 
-  def getPipelineParameters() {
+  Map getPipelineParameters() {
     return pipelineParameters
+  }
+
+  boolean pipelineParameterBooleanValue(String parameter) {
+    return Boolean.valueOf((String)this.pipelineParameters[parameter])
   }
 }
