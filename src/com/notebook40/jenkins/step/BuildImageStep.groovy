@@ -5,9 +5,31 @@ import com.notebook40.jenkins.context.Context
 class BuildImageStep extends AbstractStep {
   @Override
   void process(Context context) {
-    echo(context, 'build image')
-
     // TODO stop container if exists
+
+    // build image
+    buildImage(context)
+
+    // remove dangling images
+    removeDanglingImages(context)
+  }
+
+  @Override
+  boolean preStep(Context context) {
+    if (!super.preStep(context)) {
+      return false
+    }
+
+    if (context.pipelineParameters["skipPackage"]) {
+      echo(context, 'skip package by pipeline parameters')
+      return false
+    }
+
+    return true
+  }
+
+  private void buildImage(Context context) {
+    echo(context, 'build image')
 
     // get image name from pipeline parameters
     String imageName = context.pipelineParameters["imageName"]
@@ -20,15 +42,13 @@ class BuildImageStep extends AbstractStep {
     }
   }
 
-  @Override
-  boolean preStep(Context context) {
-    if (!super.preStep(context)) {
-      return false
-    }
+  private void removeDanglingImages(Context context) {
+    echo(context, 'remove dangling images')
 
-    if (context.pipelineParameters["skipPackage"]) {
-      echo(context, 'skip package by pipeline parameters')
-      return false
+    try {
+      context.jenkins.sh 'docker rmi $(docker images -f "dangling=true" -q)'
+    } catch (ignore) {
+      // That's fine.
     }
   }
 }
