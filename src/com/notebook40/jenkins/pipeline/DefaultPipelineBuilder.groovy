@@ -3,6 +3,7 @@ package com.notebook40.jenkins.pipeline
 import com.notebook40.jenkins.context.Context
 import com.notebook40.jenkins.step.CompileStep
 import com.notebook40.jenkins.step.InitBuildStep
+import com.notebook40.jenkins.step.UnitTestStep
 
 class DefaultPipelineBuilder implements PipelineBuilder {
   @Override
@@ -37,6 +38,10 @@ class DefaultPipelineBuilder implements PipelineBuilder {
 
       jenkins.stage('compile app') {
         new CompileStep().execute(context)
+      }
+
+      jenkins.stage('unit test') {
+        new UnitTestStep().execute(context)
       }
     }
   }
