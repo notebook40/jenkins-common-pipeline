@@ -56,8 +56,7 @@ class DefaultPipelineBuilder implements PipelineBuilder {
       }
 
       jenkins.stage('build image') {
-        new BuildImageStep().exec
-        ute(context)
+        new BuildImageStep().execute(context)
       }
     }
   }

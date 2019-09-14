@@ -23,8 +23,8 @@ class BuildImageStep extends AbstractStep {
       return false
     }
 
-    if (context.pipelineParameters["skipPackage"]) {
-      echo(context, 'skip package by pipeline parameters')
+    if (context.pipelineParameters["skipBuildImage"]) {
+      echo(context, 'skip build image by pipeline parameters')
       return false
     }
 
