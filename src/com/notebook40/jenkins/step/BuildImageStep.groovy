@@ -12,6 +12,9 @@ class BuildImageStep extends AbstractStep {
 
     // remove dangling images
     removeDanglingImages(context)
+
+    // tag image
+    tagImage(context)
   }
 
   @Override
@@ -50,5 +53,16 @@ class BuildImageStep extends AbstractStep {
     } catch (ignore) {
       // That's fine.
     }
+  }
+
+  private void tagImage(Context context) {
+    echo(context, 'tag image')
+
+    String imageName = context.pipelineParameters["imageName"]
+    String version = context.jenkins.readMavenPom.getVersion()
+    String buildNumber = context.jenkins.currentBuild.getNumber()
+
+    context.jenkins.sh "docker tag ${imageName}:latest ${imageName}:${version}"
+    context.jenkins.sh "docker tag ${imageName}:latest ${imageName}:${version}.${buildNumber}"
   }
 }
