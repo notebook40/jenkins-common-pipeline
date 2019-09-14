@@ -2,12 +2,13 @@ package com.notebook40.jenkins.step
 
 import com.notebook40.jenkins.context.Context
 
-class UnitTestStep extends MavenStep {
+class IntegrationTestStep extends MavenStep {
   @Override
   void process(Context context) {
+    // TODO to be tested.
     withMaven(context) {
       try {
-        context.jenkins.sh 'mvn test'
+        context.jenkins.sh 'maven integration-test'
       } finally {
         context.jenkins.junit 'target/surefire-reports/TEST-*.xml'
       }
@@ -20,8 +21,8 @@ class UnitTestStep extends MavenStep {
       return false
     }
 
-    if (!context.pipelineParameters["skipUnitTest"]) {
-      echo(context, 'Unit test is skipped by pipeline parameters')
+    if (!context.pipelineParameters["skipIntegrationTest"]) {
+      echo(context, 'Integration test is skipped by pipeline parameters')
       return false
     }
 
