@@ -35,7 +35,7 @@ class BuildImageStep extends AbstractStep {
     echo(context, 'build image')
 
     // get image name from pipeline parameters
-    String imageName = getImageName()
+    String imageName = getImageName(context)
 
     if (imageName) {
       // build image
@@ -59,7 +59,7 @@ class BuildImageStep extends AbstractStep {
     echo(context, 'tag image')
 
     // Tag with version
-    String imageName = getImageName()
+    String imageName = getImageName(context)
     String version = context.jenkins.readMavenPom().getVersion()
     context.jenkins.sh "docker tag ${imageName}:latest ${imageName}:${version}"
 
