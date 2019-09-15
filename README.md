@@ -15,7 +15,7 @@ This common pipeline helps you to build a maven jar project and build a docker i
 * `unit test` - Call unit test with `maven`.
 * `integration test` - Call integration test with `maven`. This function is not tested.
 * `package` - Package the application with `maven`.
-* `build image` - Build docker image for the application. The image name is from the pipeline parameter `maven.image.name`.
+* `build image` - Build docker image for the application. The default image name is `${imageNamePrefix}${project.artifactId}`. `${project.artifactId}` is the artifact ID in pom.xml. `${imageNamePrefix}` is the `imageNamePrefix` pipeline parameter.
 
 The common pipeline assumes the final name of the `pom` of the application to be built is set to `${project.artifactId}`.
 
@@ -50,9 +50,10 @@ The following are the supported pipeline parameters:
 
 Parameter | Description
 --- | ---
-maven.image.name | The docker image name of maven
-maven.image.args | The arguments to run maven image
+imageNamePrefix | The prefix of the default image name to be build. If `imageName` pipeline parameter is specified, this parameter will be ignored.
+maven.image.name | The docker image name of maven.
+maven.image.args | The arguments to run maven image.
 skipUnitTest | Skip unit test stage or not. The default value is false.
-skipIntegrationTest | Skip integration test stage or not. The default value is true
+skipIntegrationTest | Skip integration test stage or not. The default value is true.
 skipBuildImage | Skip build image stage or not. The default value is false.
-tagImageWithBuildNumber | Tag image with `${version}.${buildNumber}` or not.
+tagImageWithBuildNumber | Tag image with `${version}.${buildNumber}` or not. If `skipBuildImage` is true, this parameter will be ignored.
