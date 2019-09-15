@@ -17,18 +17,18 @@ class DefaultPipelineBuilder implements PipelineBuilder {
   }
 
   void loadProperties(Context context) {
-    // Load properties
+    // Load default properties
     String propertiesString = context.jenkins.libraryResource(
         "com/notebook40/jenkins/pipeline/defaultPipeline.properties"
     )
     Properties properties = new Properties()
     properties.load(new StringReader(propertiesString))
 
-    properties.each {
-      if (!context.pipelineParameters.containsKey(it.key)) {
-        context.pipelineParameters[it.key] = it.value
-      }
+    // Override default properties with passed in parameters
+    if (context.pipelineParameters != null) {
+      properties.putAll(context.pipelineParameters)
     }
+    context.pipelineParameters = properties
   }
 
   void buildPipeline(Context context) {
